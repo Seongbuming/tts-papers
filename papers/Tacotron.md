@@ -51,7 +51,7 @@
 
 ## 내용
 
-# Previous works
+### Previous works
 
 기존 TTS 모델은
 
@@ -64,14 +64,14 @@
 - 전문적인 지식을 기반으로 하며 디자인하기 어려움
 - 개별 학습되므로 각 컴포넌트에서 발생한 에러가 축적됨
 
-# Contributions
+### Contributions
 
 - Character sequence로부터 직접 음성을 합성하는 E2E TTS 모델
     - 라벨링된 <text, audio> pair 데이터만으로 학습할 수 있음(E2E)
 - 손이 많이 가는 언어학적 특성 추출, HNN aligner와 같은 복잡한 컴포넌트 필요하지 않음
 - 언어 및 음향 feature의 생성을 데이터만으로 훈련된 단일 신경망으로 대체하여 전통적인 speech synthesis pipeline을 단순화
 
-# Limitations & Future works
+### Limitations & Future works
 
 - 미래에는 text normalization이 불필요할 수도 있음
     - Tacotron은 simple text normalization을 사용함
@@ -80,7 +80,7 @@
 - 예를 들어 Griffin-Lim 출력은 audible artifacts를 가진다고 널리 알려져 있음
 - 빠르고 높은 퀄리티의 neural-network-based spectrogram inversion을 연구하고 있음
 
-# Architecture
+### Architecture
 
 ![Fig 1. Tacotron 모델은 입력 문자열의 Raw spectrogram을 출력, 그것을 Griffin-Lim reconstruction algorithm에 제공하여 음성을 합성함](../images/Tacotron%201.png)
 
@@ -90,7 +90,7 @@ Fig 1. Tacotron 모델은 입력 문자열의 Raw spectrogram을 출력, 그것�
 - (Input) Characters → (Output) Raw spectrogram
 - Fig 1: Encoder → Attention-based decoder → Post-processing net.의 모델 구조
 
-## 1. CBHG Module
+#### 1. CBHG Module
 
 ![Fig 2. CBHG 모듈 (1-D convolution bank + highway network + bidirectional GRU), Lee at al. (2016)에 적용됨](../images/Tacotron%202.png)
 
@@ -114,7 +114,7 @@ Fig 2. CBHG 모듈 (1-D convolution bank + highway network + bidirectional GRU),
     - 차이점은 non-casual convolutions, batch normalization, residual connections, stride=1 Max pooling
     - 이러한 modification으로 일반화(generalization) 효과 상승
 
-## 2. Encoder
+#### 2. Encoder
 
 - Encoder의 목표는 Robust sequential representations를 추출
 - (Input) Character sequence
@@ -129,7 +129,7 @@ Fig 2. CBHG 모듈 (1-D convolution bank + highway network + bidirectional GRU),
 Table 1. 하이퍼파라미터와 Network architectures.
 ”conv-k-c-RELU”는 ReLu activation과 함께 width k와 c output channels가 있는 1-D convolution 의미함
 
-## 3. Decoder
+#### 3. Decoder
 
 - 디코더로 content 기반 tanh attention decoder 사용
 - stateful recurrent layer는 각 디코더 time step마다 attention query를 생성
@@ -161,7 +161,7 @@ Table 1. 하이퍼파라미터와 Network architectures.
 - scheduled sampling과 같은 테크닉을 사용하지 않기 때문에 pre-net에서 dropout은 모델을 일반화하는데 중요한 역할을 함
     - 그것은 출력 분포의 다양한 양상을 해결하기 위해 noise source를 공급함
 
-## 4. Post-processing net and Waveform synthesis
+#### 4. Post-processing net and Waveform synthesis
 
 - post-processing net의 task는 seq2seq 타겟을 waveforms로 합성할 수 있는 타겟으로 변환하는 것
 - 이 모델에서 Griffin-Lim을 합성기(synthesizer)로 사용하기 때문에, post-processing net은 linear-frequency scale로 샘플링된 스펙트럼 크기(spectral magnitude)를 예측하도록 학습함
@@ -178,7 +178,7 @@ Table 1. 하이퍼파라미터와 Network architectures.
 - Griffin-Lim을 TensorFlow로 구현하였음
 - Griffin-Lim은 간단하고 이미 좋은 성능을 내지만 spectrogram to waveform inverter를 빠르고 고성능으로 학습할 수 있는 점에서 선택되었음
 
-## Model Detail
+#### Model Detail
 
 - Table 1의 하이퍼파라미터 및 network architectures
 - Hann windowing, 50 ms frame length, 12.5 ms frame shift, 2045-point Fourier transform과 함께 log magnitude spectrogram을 사용함
