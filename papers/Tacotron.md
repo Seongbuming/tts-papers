@@ -17,11 +17,11 @@
     </tr>
     <tr>
         <th>학술지 구분</th>
-        <td>Preprint</td>
+        <td>SCI</td>
     </tr>
     <tr>
         <th>학술지</th>
-        <td>arxiv</td>
+        <td>Interspeech</td>
     </tr>
     <tr>
         <th>언어</th>
